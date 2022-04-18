@@ -9,7 +9,7 @@ phases:
       - echo Logging in to Amazon ECR...
       - aws --version
       - $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
-      - REPOSITORY_URI=659760544815.dkr.ecr.us-east-1.amazonaws.com/my-first-repo
+      - REPOSITORY_URI= 015838347042.dkr.ecr.us-east-1.amazonaws.com/demoflask
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}')
   build:
