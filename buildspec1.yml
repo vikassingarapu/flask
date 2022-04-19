@@ -10,18 +10,19 @@ phases:
       - aws --version
       - $(aws ecr get-login --no-include-email --region us-east-1)
       - REPOSITORY_URI=015838347042.dkr.ecr.us-east-1.amazonaws.com/sample-demo-python-19
-      - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
-      - IMAGE_TAG=${COMMIT_HASH:=latest}
-      - echo $REPOSITORY_URI
-      - echo $COMMIT_HASH
-      - echo $IMAGE_TAG
+      - TAG="$(date +%Y-%m-%d.%H.%M.%S).$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | head -c 8)"
   build:
     commands:
+      - echo Build started on `date`
       - echo Building the Docker image...          
-      - docker build -t myapp:latest .
-      - docker tag myapp:latest 015838347042.dkr.ecr.us-east-1.amazonaws.com/sample-demo-python-19
+      - docker build -t $REPOSITORY_URI:$TAG .
   post_build:
     commands:
       - echo Build completed on `date`
-      - echo Pushing the Docker image...
-      - docker push 015838347042.dkr.ecr.us-east-1.amazonaws.com/sample-demo-python-19
+      - echo Pushing the Docker images...
+      - docker push $REPOSITORY_URI:$TAG
+      - echo Writing image definitions file...
+      - printf '[{"imageUri":"%s"}]' $REPOSITORY_URI:$TAG > imagedefinitions.json
+artifacts:
+    files: 
+      - imagedefinitions.json
