@@ -19,7 +19,12 @@ phases:
       - echo Pushing the Docker images...
       - docker push $REPOSITORY_URI:$TAG
       - echo Writing image definitions file...
-      - printf '[{"imageUri":"%s"}]' $REPOSITORY_URI:$TAG > imagedefinitions.json
+       - echo renaming _Dockerrun.aws.json file
+      - mv _Dockerrun.aws.json Dockerrun.aws.json
+      - echo deleting Dockerfile
+      - rm Dockerfile
+      - ls
 artifacts:
-    files:
-      - imagedefinitions.json
+  files:
+    - '**/*'
+
