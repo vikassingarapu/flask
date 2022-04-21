@@ -19,8 +19,8 @@ phases:
       - echo Pushing the Docker images...
       - docker push $REPOSITORY_URI:$TAG
       - echo Writing image definitions file...
-      - printf '[{"imageUri":"%s"}]' $REPOSITORY_URI:$TAG > imagedefinitions.json
+      - printf '[{"imageUri":"%s"}]' $REPOSITORY_URI:$TAG > Dockerrun.aws.json 
 artifacts:
   files:
-    - imagedefinitions.json
+    - Dockerrun.aws.json 
 
