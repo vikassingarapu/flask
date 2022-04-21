@@ -1,7 +1,7 @@
 {
   "AWSEBDockerrunVersion": "1",
   "Image": {
-    "Name": "015838347042.dkr.ecr.us-east-1.amazonaws.com/sample-demo-python-19:latest"
+    "Name": <CONTAINER_IMAGE>   
   },
   "Ports": [
     {
